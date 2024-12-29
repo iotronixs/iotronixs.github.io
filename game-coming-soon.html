@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game-coming-soon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet"> <!-- Russo One font -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <style>
+        /* Make sure the 3D model fills the entire viewport */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Russo One', sans-serif; /* Apply Russo One globally */
+        }
+
+        /* Ensure the spline viewer takes up the full screen */
+        spline-viewer {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Countdown timer container style */
+        .countdown {
+            position: absolute;
+            bottom: 52%;
+            right: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            pointer-events: none;
+            font-weight: bold;
+            z-index: 10;
+            cursor: default;
+            opacity: 0; /* Initially hidden */
+            animation: fadeIn 1s forwards; /* Fade-in effect */
+            animation-delay: 1s; /* Delay the fade-in */
+        }
+
+        /* Container for each countdown element (days, hours, minutes, seconds) */
+        .countdown-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 10px;
+        }
+
+        /* Style for individual countdown items (days, hours, minutes, seconds) */
+        .countdown-item {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 15px 25px;
+            border-radius: 15px;
+            margin: 5px 0;
+            text-align: center;
+            box-shadow: 0 0 20px rgb(143, 238, 247);
+            font-size: 32px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Additional styling for labels */
+        .countdown-label {
+            font-size: 16px;
+            color: white;
+            margin-top: 5px;
+        }
+
+        /* Animation for fading in the countdown items */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Style the separator between time elements */
+        .separator {
+            color: white;
+            font-size: 36px;
+            margin: 0 10px;
+        }
+
+        /* Coming Soon text style */
+        .coming-soon {
+            position: absolute;
+            top: 50%;
+            left: 50px;
+            transform: translateY(-50%);
+            font-size: 7vw;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 10px rgba(143, 238, 247, 1);
+            z-index: 20;
+            letter-spacing: 7px;
+            text-align: center;
+
+            cursor: default;
+            opacity: 0; /* Initially hidden */
+            animation: fadeIn 1s forwards;
+            animation-delay: 1s; /* Delay the fade-in */
+            pointer-events: none;
+        }
+
+        /* Email input box and "Notify Me" button */
+        .email-container {
+            position: absolute;
+            bottom: 28%;
+            right: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 20;
+            width: 100%;
+            max-width: 320px; /* To prevent it from stretching too far */
+            opacity: 0; /* Initially hidden */
+            animation: fadeIn 1s forwards; /* Fade-in effect */
+            animation-delay: 1s; /* Delay the fade-in */
+        }
+
+        /* Style for email input field */
+        #email-input {
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 2px solid #00bcd4;
+            font-size: 18px;
+            outline: none;
+            margin-bottom: 15px;
+            width: 350px;
+            box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+        }
+
+        #email-input:focus {
+            border-color: #00a0c9;
+        }
+
+        /* Style for "Notify Me" button */
+        .notify-button {
+            background-color: rgba(143, 238, 247,0.5);
+            color: white;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            margin-left: 105px;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            width: auto;
+            box-sizing: border-box;
+        }
+        
+        /* Success message
+        .success-message {
+            position: absolute;
+            bottom: 28%;
+            right: 180px;
+            color: white;
+            background-color: rgba(0, 255, 0, 0.6);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 18px;
+            display: none;
+            z-index: 20;
+        } */
+
+        /* Icon for the button */
+        .notify-button i {
+            margin-right: 10px;
+        }
+
+        #my-form-status {
+            height: 30px;
+            overflow: hidden;
+        }
+
+        @media (max-width:600px) {
+
+
+            .coming-soon {
+            top: 15%;
+            left: 80px;
+            font-size: 15vw;
+        }
+        .countdown {
+            bottom: 40%;
+            right: 0.5px;
+            color: white;
+            font-size: 17px;
+        }
+        .email-container {
+            bottom: 20%;
+            right: 90px;
+        }
+        .notify-button {
+            margin-left: 90px;
+        }
+            
+        }
+        /* Animation for button on hover */
+        .notify-button:hover {
+            background-color: #0097a7;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Countdown Timer -->
+    <div class="countdown" id="countdown">
+        <div class="countdown-box">
+            <div class="countdown-item" id="days">00</div>
+            <div class="countdown-label" id="days-label">Days</div>
+        </div>
+        <div class="separator">:</div>
+        <div class="countdown-box">
+            <div class="countdown-item" id="hours">00</div>
+            <div class="countdown-label" id="hours-label">Hours</div>
+        </div>
+        <div class="separator">:</div>
+        <div class="countdown-box">
+            <div class="countdown-item" id="minutes">00</div>
+            <div class="countdown-label" id="minutes-label">Minutes</div>
+        </div>
+        <div class="separator">:</div>
+        <div class="countdown-box">
+            <div class="countdown-item" id="seconds">00</div>
+            <div class="countdown-label" id="seconds-label">Seconds</div>
+        </div>
+    </div>
+
+    <!-- "Coming Soon" Text -->
+    <div class="coming-soon">COMING<br>SOON</div>
+
+    <!-- Email input and Notify Me button wrapped in a form -->
+    <div class="email-container" id="email-container">
+        <form id="email-form" action="https://formspree.io/f/xyzzepjl" method="post">
+            <label>
+                <input type="text" name="_gotcha" style="display:none" />
+            <input type="email" id="email-input" name="email" placeholder="Enter your email" required>
+        </label>
+            <button type="submit" class="notify-button">
+                <i class="fa fa-bullhorn" aria-hidden="true"></i> Notify Me 
+            </button>
+            <p id="my-form-status" style="color: white; padding-left: 60px;"></p>
+        </form>
+    </div>
+
+    <!-- Embed the Spline viewer with your 3D model URL -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.54/build/spline-viewer.js"></script>
+    <spline-viewer 
+        url="https://prod.spline.design/5359jA0dUNI0gINo/scene.splinecode"
+        id="spline-viewer">
+    </spline-viewer>
+
+    <script>
+        // Hardcoded target date for the countdown (e.g., January 15, 2025 at 00:00:00 UTC)
+        const targetDate = new Date("January 26, 2025 00:00:00 UTC").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();  // Get current time
+            const remainingTime = targetDate - now;  // Time remaining until the target date
+
+            if (remainingTime <= 0) {
+                // If the countdown ends
+                document.getElementById("countdown").innerHTML = "<div class='countdown-item'>Countdown Ended</div>";
+                clearInterval(countdownInterval); // Stop the countdown
+            } else {
+                // Calculate days, hours, minutes, and seconds remaining
+                const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+                // Update the countdown timer with leading zero formatting
+                document.getElementById("days").textContent = days < 10 ? '0' + days : days;
+                document.getElementById("hours").textContent = hours < 10 ? '0' + hours : hours;
+                document.getElementById("minutes").textContent = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById("seconds").textContent = seconds < 10 ? '0' + seconds : seconds;
+            }
+        }
+
+        // Update countdown every second
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        var form = document.getElementById("email-form");
+        async function handleSubmit(event) {
+        event.preventDefault();
+        var status = document.getElementById("my-form-status");
+        var data = new FormData(event.target);
+        fetch(event.target.action, {
+        method: form.method,
+        body: data,
+        headers: {
+            'Accept': 'application/json'
+        }
+        }).then(response => {
+        if (response.ok) {
+            status.innerHTML = "Thanks for your submission!";
+            form.reset()
+            setTimeout(() => {
+                    status.innerHTML = ""; // Clear the status message
+                }, 2000);
+        } else {
+            response.json().then(data => {
+            if (Object.hasOwn(data, 'errors')) {
+            status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+            } else {
+            status.innerHTML = "Oops! There was a problem submitting your form"
+            }
+        })
+        }
+        }).catch(error => {
+        status.innerHTML = "Oops! There was a problem submitting your form"
+        });
+        }
+        form.addEventListener("submit", handleSubmit)
+    </script>
+
+</body>
+</html>

@@ -565,7 +565,18 @@ section,
   position: relative;
   z-index: 3;
 }
-
+@media (max-width:600px) {
+  .section-title {
+    padding-left: 25px;
+    padding-right: 25px;
+    justify-content: center;
+  }
+  .resume-item {
+    padding-left: 25px;
+    padding-right: 25px;
+    justify-content: center;
+  }
+}
 .hero h2 {
   margin: 0;
   font-size: 64px;

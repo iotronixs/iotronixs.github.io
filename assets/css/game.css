@@ -1,0 +1,203 @@
+/* Make sure the 3D model fills the entire viewport */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Russo One', sans-serif; /* Apply Russo One globally */
+}
+
+/* Ensure the spline viewer takes up the full screen */
+spline-viewer {
+    width: 100%;
+    height: 100%;
+}
+
+/* Countdown timer container style */
+.countdown {
+    position: absolute;
+    bottom: 52%;
+    right: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    pointer-events: none;
+    font-weight: bold;
+    z-index: 10;
+    cursor: default;
+    opacity: 0; /* Initially hidden */
+    animation: fadeIn 1s forwards; /* Fade-in effect */
+    animation-delay: 1s; /* Delay the fade-in */
+}
+
+/* Container for each countdown element (days, hours, minutes, seconds) */
+.countdown-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px;
+}
+
+/* Style for individual countdown items (days, hours, minutes, seconds) */
+.countdown-item {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 15px 25px;
+    border-radius: 15px;
+    margin: 5px 0;
+    text-align: center;
+    box-shadow: 0 0 20px rgb(143, 238, 247);
+    font-size: 32px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Additional styling for labels */
+.countdown-label {
+    font-size: 16px;
+    color: white;
+    margin-top: 5px;
+}
+
+/* Animation for fading in the countdown items */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Style the separator between time elements */
+.separator {
+    color: white;
+    font-size: 36px;
+    margin: 0 10px;
+}
+
+/* Coming Soon text style */
+.coming-soon {
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    transform: translateY(-50%);
+    font-size: 7vw;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 10px rgba(143, 238, 247, 1);
+    z-index: 20;
+    letter-spacing: 7px;
+    text-align: center;
+
+    cursor: default;
+    opacity: 0; /* Initially hidden */
+    animation: fadeIn 1s forwards;
+    animation-delay: 1s; /* Delay the fade-in */
+    pointer-events: none;
+}
+
+/* Email input box and "Notify Me" button */
+.email-container {
+    position: absolute;
+    bottom: 28%;
+    right: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 20;
+    width: 100%;
+    max-width: 320px; /* To prevent it from stretching too far */
+    opacity: 0; /* Initially hidden */
+    animation: fadeIn 1s forwards; /* Fade-in effect */
+    animation-delay: 1s; /* Delay the fade-in */
+}
+
+/* Style for email input field */
+#email-input {
+    padding: 12px 20px;
+    border-radius: 50px;
+    border: 2px solid #00bcd4;
+    font-size: 18px;
+    outline: none;
+    margin-bottom: 15px;
+    width: 350px;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+}
+
+#email-input:focus {
+    border-color: #00a0c9;
+}
+
+/* Style for "Notify Me" button */
+.notify-button {
+    background-color: rgba(143, 238, 247,0.5);
+    color: white;
+    padding: 12px 25px;
+    font-size: 18px;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    margin-left: 105px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    width: auto;
+    box-sizing: border-box;
+}
+
+/* Success message
+.success-message {
+    position: absolute;
+    bottom: 28%;
+    right: 180px;
+    color: white;
+    background-color: rgba(0, 255, 0, 0.6);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 18px;
+    display: none;
+    z-index: 20;
+} */
+
+/* Icon for the button */
+.notify-button i {
+    margin-right: 10px;
+}
+
+#my-form-status {
+    height: 30px;
+    overflow: hidden;
+}
+
+@media (max-width:600px) {
+
+
+    .coming-soon {
+    top: 15%;
+    left: 80px;
+    font-size: 15vw;
+}
+.countdown {
+    bottom: 40%;
+    right: 0.5px;
+    color: white;
+    font-size: 17px;
+}
+.email-container {
+    bottom: 20%;
+    right: 90px;
+}
+.notify-button {
+    margin-left: 90px;
+}
+    
+}
+/* Animation for button on hover */
+.notify-button:hover {
+    background-color: #0097a7;
+    transform: scale(1.1);
+}

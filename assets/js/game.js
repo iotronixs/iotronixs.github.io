@@ -26,6 +26,9 @@
 
  // Update countdown every second
  const countdownInterval = setInterval(updateCountdown, 1000);
+ updateCountdown(); // Initial call to display the countdown immediately
+
+//Email form submission logic
  var form = document.getElementById("email-form");
  async function handleSubmit(event) {
  event.preventDefault();

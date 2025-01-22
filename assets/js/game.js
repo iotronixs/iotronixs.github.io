@@ -1,5 +1,5 @@
  // Hardcoded target date for the countdown (e.g., January 15, 2025 at 00:00:00 UTC)
- const targetDate = new Date("January 26, 2025 00:00:00 UTC").getTime();
+ const targetDate = new Date("April 26, 2025 00:00:00 UTC").getTime();
 
  function updateCountdown() {
      const now = new Date().getTime();  // Get current time

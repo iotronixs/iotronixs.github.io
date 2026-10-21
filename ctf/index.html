@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iotronixs CTF</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #101318;
+      color: #f2f4f8;
+      font-family: Arial, sans-serif;
+    }
+
+    main {
+      width: 100%;
+      max-width: 480px;
+      padding: 32px;
+      border: 1px solid #343b46;
+      border-radius: 16px;
+      background: #191e26;
+      text-align: center;
+    }
+
+    h1 { margin-top: 0; letter-spacing: 2px; }
+    p { color: #aab4c2; line-height: 1.6; }
+
+    button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 13px;
+      border: 0;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #login { background: #f2f4f8; color: #15181d; }
+    #logout { background: #343b46; color: white; }
+    #logout[hidden], #account[hidden] { display: none; }
+
+    #status {
+      margin-top: 20px;
+      overflow-wrap: anywhere;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>IOTRONIXS CTF</h1>
+    <p>
+      A story-driven cyber investigation.
+      Your missions will arrive by email.
+    </p>
+
+    <button id="login">Sign in with Google</button>
+
+    <div id="account" hidden>
+      <p>Google sign-in successful.</p>
+      <p id="email"></p>
+      <button id="logout" hidden>Sign out</button>
+    </div>
+
+    <p id="status" role="status">Checking authentication...</p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    // Replace these two placeholders with your Supabase values.
+    const SUPABASE_URL = "https://fxzxhyizzvmqzdfxatki.supabase.co/rest/v1/";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2Ji7nv4vHVMmNz-csa5gpg_taF-rd8K";
+
+    const client = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const loginButton = document.getElementById("login");
+    const logoutButton = document.getElementById("logout");
+    const account = document.getElementById("account");
+    const email = document.getElementById("email");
+    const status = document.getElementById("status");
+
+    function displaySession(session) {
+      const loggedIn = Boolean(session?.user);
+
+      loginButton.hidden = loggedIn;
+      account.hidden = !loggedIn;
+      logoutButton.hidden = !loggedIn;
+
+      email.textContent = loggedIn
+        ? "Signed in as: " + (session.user.email || "Google account")
+        : "";
+
+      status.textContent = loggedIn
+        ? "Authentication working. Your CTF account is connected."
+        : "Sign in to begin your investigation.";
+    }
+
+    loginButton.addEventListener("click", async () => {
+      status.textContent = "Opening Google sign-in...";
+
+      const { error } = await client.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: "https://iotronixs.in/ctf/"
+        }
+      });
+
+      if (error) {
+        status.textContent = "Sign-in error: " + error.message;
+      }
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      status.textContent = "Signing out...";
+
+      const { error } = await client.auth.signOut();
+
+      if (error) {
+        status.textContent = "Sign-out error: " + error.message;
+      }
+    });
+
+    client.auth.onAuthStateChange((_event, session) => {
+      displaySession(session);
+    });
+
+    client.auth.getSession().then(({ data, error }) => {
+      if (error) {
+        status.textContent = "Could not check session: " + error.message;
+        return;
+      }
+
+      displaySession(data.session);
+    });
+  </script>
+</body>
+</html>
